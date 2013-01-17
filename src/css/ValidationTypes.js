@@ -123,7 +123,7 @@ var ValidationTypes = {
         "<length>": function(part){
             if (part.type == "function" && /^(?:\-(?:ms|moz|o|webkit)\-)?calc/i.test(part)){
                 return true;
-            }else{
+            } else {
                 return part.type == "length" || part.type == "number" || part.type == "integer" || part == "0";
             }
         },

@@ -406,6 +406,11 @@
             "rgb(255,0,1)"      : [CSSTokens.FUNCTION, CSSTokens.NUMBER, CSSTokens.COMMA, CSSTokens.NUMBER, CSSTokens.COMMA, CSSTokens.NUMBER, CSSTokens.RPAREN],
             "counter(par-num,upper-roman)" : [CSSTokens.FUNCTION, CSSTokens.IDENT, CSSTokens.COMMA, CSSTokens.IDENT, CSSTokens.RPAREN],
             "calc(100% - 5px)"      : [CSSTokens.FUNCTION, CSSTokens.PERCENTAGE, CSSTokens.S, CSSTokens.MINUS, CSSTokens.S, CSSTokens.LENGTH, CSSTokens.RPAREN],
+			
+			//IE CSS expression
+            "expression(hideFocus='true')"      : [CSSTokens.FUNCTION, CSSTokens.IDENT, CSSTokens.EQUALS, CSSTokens.STRING, CSSTokens.RPAREN],
+            "expression(style.height=(parentNode.offsetHeight - 20)+'px', style.clear='none', 0)"      : [CSSTokens.FUNCTION, CSSTokens.IDENT, CSSTokens.DOT, CSSTokens.IDENT, CSSTokens.EQUALS, CSSTokens.LPAREN, CSSTokens.IDENT, CSSTokens.DOT, CSSTokens.IDENT, CSSTokens.S, CSSTokens.MINUS, CSSTokens.S, CSSTokens.NUMBER, CSSTokens.RPAREN, CSSTokens.PLUS, CSSTokens.STRING, CSSTokens.COMMA, CSSTokens.S, CSSTokens.IDENT, CSSTokens.DOT, CSSTokens.IDENT, CSSTokens.EQUALS, CSSTokens.STRING, CSSTokens.COMMA, CSSTokens.S, CSSTokens.NUMBER, CSSTokens.RPAREN],
+            "expression(style.height=parentNode.offsetHeight+'px', style.clear='none', 0)"      : [CSSTokens.FUNCTION, CSSTokens.IDENT, CSSTokens.DOT, CSSTokens.IDENT, CSSTokens.EQUALS, CSSTokens.IDENT, CSSTokens.DOT, CSSTokens.IDENT, CSSTokens.PLUS, CSSTokens.STRING, CSSTokens.COMMA, CSSTokens.S, CSSTokens.IDENT, CSSTokens.DOT, CSSTokens.IDENT, CSSTokens.EQUALS, CSSTokens.STRING, CSSTokens.COMMA, CSSTokens.S, CSSTokens.NUMBER, CSSTokens.RPAREN],
 
             //old-style IE filters - interpreted as bunch of tokens
             "alpha(opacity=50)" : [CSSTokens.FUNCTION, CSSTokens.IDENT, CSSTokens.EQUALS, CSSTokens.NUMBER, CSSTokens.RPAREN],

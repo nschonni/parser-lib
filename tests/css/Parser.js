@@ -1386,6 +1386,13 @@
             var result = parser.parsePropertyValue("alpha(opacity=10)");
 
             Assert.isInstanceOf(parserlib.css.PropertyValue, result);
+        },
+
+        testIECSSExpression1: function(){
+            var parser = new Parser();
+            var result = parser.parsePropertyValue("expression(style.height=parentNode.offsetHeight+'px', style.clear='none', 0)");
+
+            Assert.isInstanceOf(parserlib.css.PropertyValue, result);
         }
 
 
