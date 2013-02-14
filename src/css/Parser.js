@@ -122,6 +122,10 @@ Parser.prototype = function(){
                             case Tokens.KEYFRAMES_SYM:
                                 this._keyframes(); 
                                 this._skipCruft();
+                                break;
+                            case Tokens.KEYFRAMES_SYM:
+                                this._document(); 
+                                this._skipCruft();
                                 break;                                
                             case Tokens.UNKNOWN_SYM:  //unknown @ rule
                                 tokenStream.get();
@@ -674,7 +678,119 @@ Parser.prototype = function(){
                 
                 return tokenStream.token().value;
             },
+
+            _document: function(){
+                /*
+                 * document_rule
+                 *  : DOCUMENT_SYM S+ url_match_fn ( "," S* url_match_fn )* group_rule_body
+                 *  ;
+                 */ 
+                 var tokenStream = this._tokenStream,
+                    line,
+                    col,
+					url_match_fn_list;
+
+                    tokenStream.mustMatch(Tokens.DOCUMENT_SYM);
+                    line = tokenStream.token().startLine;
+                    col = tokenStream.token().startCol;
+
+                    this._readWhitespace();
+
+                    url_match_fn_list = this._url_match_fn_list();
+
+                    this.fire({
+                        type: "startdocument",
+                        line: line,
+                        col: col
+                    });
+
+                    this._readDeclarations(true);
+
+                    this.fire({
+                        type: "enddocument",
+                        line: line,
+                        col: col
+                    });
+
+            },
             
+			_url_match_fn_list: function(){
+                /*
+                 *url_match_fn
+                 *  : (URI | FUNCTION) S*
+                 *  ;
+                 */
+                var tokenStream = this._tokenStream,
+                    urlMatchFunctionList = [];
+                
+                
+                this._readWhitespace();
+                
+                if (tokenStream.peek() == Tokens.IDENT || tokenStream.peek() == Tokens.LPAREN){
+                    urlMatchFunctionList.push(this._url_match_fn());
+                }
+                
+                while(tokenStream.match(Tokens.COMMA)){
+                    this._readWhitespace();
+                    urlMatchFunctionList.push(this._url_match_fn());
+                }
+                
+                return urlMatchFunctionList;
+			},
+
+			_url_match_fn: function(){
+                /*
+                 *<url> | url-prefix(<string>) | domain(<string>) | regexp(<string>)
+                 */
+                var tokenStream = this._tokenStream,
+                    type        = null,
+                    ident       = null,
+                    token       = null,
+                    expressions = [];
+//uri = tokenStream.token().value.replace(/(?:url\()?["']([^"']+)["']\)?/, "$1");                    
+                if (tokenStream.match(Tokens.IDENT)){
+                    ident = tokenStream.token().value.toLowerCase();
+                    
+                    //since there's no custom tokens for these, need to manually check
+                    if (ident != "only" && ident != "not"){
+                        tokenStream.unget();
+                        ident = null;
+                    } else {
+                        token = tokenStream.token();
+                    }
+                }
+                                
+                this._readWhitespace();
+                
+                if (tokenStream.peek() == Tokens.IDENT){
+                    type = this._media_type();
+                    if (token === null){
+                        token = tokenStream.token();
+                    }
+                } else if (tokenStream.peek() == Tokens.LPAREN){
+                    if (token === null){
+                        token = tokenStream.LT(1);
+                    }
+                    expressions.push(this._media_expression());
+                }                               
+                
+                if (type === null && expressions.length === 0){
+                    return null;
+                } else {                
+                    this._readWhitespace();
+                    while (tokenStream.match(Tokens.IDENT)){
+                        if (tokenStream.token().value.toLowerCase() != "and"){
+                            this._unexpectedToken(tokenStream.token());
+                        }
+                        
+                        this._readWhitespace();
+                        expressions.push(this._media_expression());
+                    }
+                }
+
+                return new MediaQuery(ident, type, expressions, token.startLine, token.startCol);
+            },
+			
             _font_face: function(){
                 /*
                  * font_face

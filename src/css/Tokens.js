@@ -35,7 +35,10 @@ var Tokens  = [
     //{ name: "ATKEYWORD"},
     
     //CSS3 animations
-    { name: "KEYFRAMES_SYM", text: [ "@keyframes", "@-webkit-keyframes", "@-moz-keyframes", "@-o-keyframes" ] },
+    { name: "KEYFRAMES_SYM", text: [ "@keyframes", "@-webkit-keyframes", "@-moz-keyframes", "@-o-keyframes" ] }, 
+
+	//Document
+    { name: "DOCUMENT_SYM", text: [ "@document", "@-moz-document"] },
 
     //important symbol
     { name: "IMPORTANT_SYM"},

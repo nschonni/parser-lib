@@ -1437,6 +1437,17 @@
         }
 
     }));
+	
+	suite.add(new YUITest.TestCase({
+
+        name: "@Document Parsing Tests",
+		
+		testMozDocument: function(){
+            var parser = new Parser({strict:true});
+            var result = parser.parse("@-moz-document url-prefix() { .ui-select .ui-btn select { opacity: 0.0001; }}");
+            Assert.isTrue(true);
+        }
+    }));
 
     suite.add(new YUITest.TestCase({
 

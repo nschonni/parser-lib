@@ -511,7 +511,7 @@ TokenStream.prototype = mix(new TokenStreamBase(), {
         //if there's a left paren immediately after, it's a URI or function
         if (reader.peek() == "("){
             ident += reader.read();
-            if (ident.toLowerCase() == "url("){
+            if (ident.toLowerCase() == "url(" || ident.toLowerCase() == "url-prefix(" || ident.toLowerCase() == "domain(" || ident.toLowerCase() == "regexp("){
                 tt = Tokens.URI;
                 ident = this.readURI(ident);
 

@@ -172,6 +172,10 @@
             "@-webkit-keyframes":   CSSTokens.KEYFRAMES_SYM,
             "@-moz-keyframes"   : CSSTokens.KEYFRAMES_SYM,
             "@keyframes"        : CSSTokens.KEYFRAMES_SYM,
+
+            //document
+            "@-moz-document"   : CSSTokens.DOCUMENT_SYM,
+            "@document"        : CSSTokens.DOCUMENT_SYM,
             
             //errors
             "@foo"              : CSSTokens.UNKNOWN_SYM,
