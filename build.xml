@@ -6,15 +6,12 @@
     <!-- the directories containing the source files -->
     <property name="src.dir" value="./src" />
     <property name="tests.dir" value="./tests" />
-    <property name="npm.dir" value="./npm" />
 
     <!-- the directories and files to output to -->
     <property name="lib.dir" value="./lib" />
 
     <!-- the directories and files to output to -->
-    <property name="build.dir" value="./build" />
-    <property name="release.dir" value="./release" />
-    <property name="build.npm.dir" value="${build.dir}/npm" />
+    <property name="build.dir" value="./dist" />
 
     <!-- output filenames -->
     <property name="full.build.file" value="parserlib.js"/>
@@ -185,12 +182,7 @@
             </footer>
         </concat>
 
-       <mkdir dir="${build.npm.dir}"/>
-       <mkdir dir="${build.npm.dir}/lib"/>
        <replaceregexp match="&quot;version&quot;: &quot;(.*)&quot;," replace="&quot;version&quot;: &quot;${parserlib.version}&quot;," file="package.json" />
-       <copy file="package.json" todir="${build.npm.dir}"/>
-       <copy file="README.md" todir="${build.npm.dir}"/>
-       <copy file="${build.dir}/${node.build.file}" todir="${build.npm.dir}/lib"/>
 
        <!-- CRLF will cause Node version to break -->
        <fixcrlf srcdir="${build.dir}" includes="**/*" eol="lf" />
@@ -205,11 +197,9 @@
 
     <!-- Create a release with version number embedded -->
     <target name="release" depends="test,build.all,changelog.update">
-        <delete dir="${release.dir}" />
-        <mkdir dir="${release.dir}"/>
-        <copy todir="${release.dir}">
-            <fileset dir="${build.dir}" includes="**/*" />
-        </copy>
+        <exec executable="git" failonerror="true">
+            <arg line="add -f dist/ -m &quot;v${parserlib.version}\n${git.changelog}&quot;"/>
+        </exec>
     </target>
 
     <!-- Build all files -->

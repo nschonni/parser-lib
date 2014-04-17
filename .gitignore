@@ -1,5 +1,6 @@
 #Ignore timestamped build outputs.
 build/
+dist/
 
 # Windows image file caches
 Thumbs.db
