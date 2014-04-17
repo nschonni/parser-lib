@@ -1,6 +1,8 @@
 (function(){
 
-    var Assert = YUITest.Assert,
+    var YUITest = this.YUITest || require("yuitest"),
+        Assert = YUITest.Assert,
+        parserlib = this.parserlib || require("../../dist/node-parserlib"),
         MediaQuery = parserlib.css.MediaQuery,
         Selector = parserlib.css.Selector,
         Combinator = parserlib.css.Combinator,

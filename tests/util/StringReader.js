@@ -1,6 +1,8 @@
 (function(){
 
-    var Assert = YUITest.Assert
+    var YUITest = this.YUITest || require("yuitest"),
+        Assert = YUITest.Assert,
+        parserlib = this.parserlib || require("../../dist/node-parserlib"),
         StringReader = parserlib.util.StringReader;
 
     //-------------------------------------------------------------------------

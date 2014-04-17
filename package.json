@@ -6,7 +6,14 @@
     "Nick Schonning"
   ],
   "description": "CSS3 SAX-inspired parser",
-  "keywords": [ "parser", "css", "css3", "sax", "style", "stylesheet" ],
+  "keywords": [
+    "parser",
+    "css",
+    "css3",
+    "sax",
+    "style",
+    "stylesheet"
+  ],
   "homepage": "http://github.com/CSSLint/parser-lib",
   "engines": {
     "node": ">=0.2.0"
@@ -24,7 +31,10 @@
     "url": "http://github.com/CSSLint/parser-lib.git"
   },
   "scripts": {
-    "test": "ant -f build.xml test",
+    "test": "yuitest tests",
     "prepublish": "npm test"
+  },
+  "devDependencies": {
+    "yuitest": "~0.7.9"
   }
 }
